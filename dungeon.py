@@ -61,5 +61,5 @@ class Dungeon:
         else:
             print('\t' * (indent + 1) + str(indent))
 
-# if __name__ == 'main':
-#     Dungeon.create_dungeon()
+if __name__ == '__main__':
+    Dungeon.create_dungeon()
