@@ -74,9 +74,6 @@ class Dungeon:
     def create_room(self, room):
         pass
 
-    def rotate(self, room):
-        pass
-
     def display_dungeon(self):
         horizontal_imgs = list()
         imgs_comb = None
