@@ -1,5 +1,7 @@
 import random
 import numpy as np
+from PIL import Image
+
 
 class Room:
     """
@@ -76,7 +78,17 @@ class Dungeon:
         pass
 
     def display_dungeon(self):
-        pass
+        horizontal_imgs = list()
+        imgs_comb = None
+        for i in range(0, len(self.map[0])):
+            imgs = self.map[i]
+            imgs_comb = np.hstack(imgs)
+            horizontal_imgs.append(imgs_comb)
+
+        imgs_comb = np.vstack(horizontal_imgs)
+        imgs_comb = Image.fromarray(imgs_comb)
+
+        imgs_comb.save('./assets/dungeon.png')
        
 
 if __name__ == '__main__':
