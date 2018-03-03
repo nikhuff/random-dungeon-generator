@@ -49,17 +49,7 @@ class Dungeon:
         return self.build_dungeon(self.starting_room)
     
     def display_dungeon(self, room, indent=0):
-        print('\t' * indent + str(indent))
-        if room.room_left != None:
-            self.display_dungeon(room.room_left, indent + 1)
-        elif room.room_top != None:
-            self.display_dungeon(room.room_top, indent + 1)
-        elif room.room_right != None:
-            self.display_dungeon(room.room_right, indent + 1)
-        elif room.room_right != None:
-            self.display_dungeon(room.room_bottom, indent + 1)
-        else:
-            print('\t' * (indent + 1) + str(indent))
+       
 
 if __name__ == '__main__':
     Dungeon.create_dungeon()
