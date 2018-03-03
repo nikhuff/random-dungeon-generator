@@ -50,17 +50,17 @@ class Dungeon:
                         self.build_dungeon(x - 1, y)
                     # if the door is on the right and there is not
                     # already a door on that side
-                    if i == 1 and self.map[x][y + 1] is int:
+                    elif i == 1 and self.map[x][y + 1] is int:
                         self.place_room(x, y + 1)
                         self.build_dungeon(x, y + 1)
                     # if the door is on the bottom and there is not
                     # already a door on that side
-                    if i == 2 and self.map[x + 1][y] is int:
+                    elif i == 2 and self.map[x + 1][y] is int:
                         self.place_room(x + 1, y)
                         self.build_dungeon(x + 1, y)
                     # if the door is on the bottom and there is not
                     # already a door on that side
-                    if i == 3 and self.map[x][y + 1] is int:
+                    elif i == 3 and self.map[x][y + 1] is int:
                         self.place_room(x, y + 1)
                         self.build_dungeon(x, y + 1)
             # once you've checked all your doors, return
