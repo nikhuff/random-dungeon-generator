@@ -1,55 +1,37 @@
 import random
+import numpy as np
 
 class Room:
-    def __init__(self):
-        self.room_left = None
-        self.room_top = None
-        self.room_bottom = None
-        self.room_right = None
-
-    def add_left(self, room):
-        self.room_left = room
-
-    def add_top(self, room):
-        self.room_top = room
-
-    def add_right(self, room):
-        self.room_right = room
-
-    def add_bottom(self, room):
-        self.room_bottom = room
+    def __init__(self, doors):
+        self.doors = doors
+        self.num_doors = doors.count(1)
+        self.image = np.zeros((100, 100))
+    
+    def display(self):
+        print(self.doors)
+        print(self.num_doors)
 
 class Dungeon:
-    def __init(self, room):
-        self.starting_room = Room()
+    def __init__(self):
+        self.map = np.zeros((9, 9), dtype=Room)
+        self.map[4][4] = Room([1] * 4)
 
-    def build_dungeon(self, room):
-        choice = random.randint(1, 10)
+    def build_dungeon(self, coordinates):
+        pass
 
-        if choice == 1:
-            new_room = Room()
-            self.build_dungeon(new_room)
-            room.add_left(new_room)
-        elif choice == 2:
-            new_room = Room()
-            self.build_dungeon(new_room)
-            room.add_top(new_room)
-        elif choice == 3:
-            new_room = Room()
-            self.build_dungeon(new_room)
-            room.add_right(new_room)
-        elif choice == 4:
-            new_room = Room()
-            self.build_dungeon(new_room)
-            room.add_bottom(new_room)
-        else:
-            return
+    def place_room(self, coordinates):
+        pass
 
-    def create_dungeon(self):
-        return self.build_dungeon(self.starting_room)
-    
-    def display_dungeon(self, room, indent=0):
+    def create_room(self, room):
+        pass
+
+    def rotate(self, room):
+        pass
+
+    def display_dungeon(self):
+        pass
        
 
 if __name__ == '__main__':
-    Dungeon.create_dungeon()
+    dungeon = Dungeon()
+    dungeon.map[4][4].display()
