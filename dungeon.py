@@ -1,6 +1,4 @@
-import random
-import numpy as np
-from PIL import Image
+
 
 
 class Room:
@@ -72,9 +70,27 @@ class Dungeon:
             # once you've checked all your doors, return
             return
 
-    def create_room(self, doors, num):
+    def get_room(self, doors, num):
 
-        pass
+        if (num == 1):
+            returnRoomNum = random.randint(oneDoorRooms.length())
+            return(oneDoorRooms[returnRoomNum])
+
+        if (num == 2):
+            if(doors[0] == doors[2] or doors[1] == doors[3]):
+                returnRoomNum = random.randint(twoDoorRoomsS.length())
+                return (twoDoorRoomsS[returnRoomNum])
+            else:
+                returnRoomNum = random.randint(twoDoorRoomsA.length())
+                return (twoDoorRoomsA[returnRoomNum])
+
+        if (num == 3):
+            returnRoomNum = random.randint(threeDoorRooms.length())
+            return (threeDoorRooms[returnRoomNum])
+
+        if (num == 4):
+            returnRoomNum = random.randint(fourDoorRooms.length())
+            return (fourDoorRooms[returnRoomNum])
 
     def place_room(self, x, y):
         """
