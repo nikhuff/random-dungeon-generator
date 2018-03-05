@@ -25,11 +25,15 @@ class Room:
         print(self.doors)
         print(self.num_doors)
 
+
+
+
+
 class Dungeon:
     """
     Contains the notion of a dungeon. Map is a 9x9 array that holds
     instances of rooms. Build dungeon starts at the center room
-    in the array and recursively brances out.
+    in the array and recursively branches out.
     """
     def __init__(self):
         self.map = np.zeros((9, 9), dtype=Room)
@@ -68,11 +72,54 @@ class Dungeon:
             # once you've checked all your doors, return
             return
 
-    def place_room(self, x, y):
+    def create_room(self, doors, num):
+
         pass
 
-    def create_room(self, room):
-        pass
+    def place_room(self, x, y):
+        """
+        Takes in new room coordinates and checks surrounding spaces in
+        the array for rooms. if there is a room then it checks if it
+        need to match the door of the room if not it randomly picks if
+        it has a door.
+        """
+
+        new_doors = [0, 0, 0, 0]
+        if self.map[x-1, y] is not None:
+            if self.map[x-1, y].doors[2] == 1:
+                new_doors[0] = 1
+        else:
+            new_doors[0] = random.randint(0, 2)
+
+        if self.map[x, y+1] is not None:
+            if self.map[x, y+1].doors[3] == 1:
+                new_doors[1] = 1
+        else:
+            new_doors[1] = random.randint(0, 2)
+
+        if self.map[x + 1, y] is not None:
+            if self.map[x + 1, y].doors[0] == 1:
+                new_doors[2] = 1
+        else:
+            new_doors[2] = random.randint(0, 2)
+
+        if self.map[x, y - 1] is not None:
+            if self.map[x, y - 1].doors[1] == 1:
+                new_doors[3] = 1
+        else:
+            new_doors[0] = random.randint(0, 2)
+
+        if x == 0:
+            new_doors[0] = 0
+        if y == 9:
+            new_doors[1] = 0
+        if x == 9:
+            new_doors[2] = 0
+        if y == 0:
+            new_doors[3] = 0
+        num_doors = sum(new_doors)
+        new_room = self.create_room(new_doors, num_doors)
+        return new_room
 
     def display_dungeon(self):
         horizontal_imgs = list()
