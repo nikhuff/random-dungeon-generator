@@ -16,45 +16,46 @@ class Room:
         self.roomImage = image
 
 
-    def rotate(self):
+    def rotate(self, room):
+        print(room.doors)
         # rotate the doors and image 90 degrees
-        self.doors = self.doors.append(self.doors.pop(0))
-        np.rot90(self.roomImage)
+        room.doors = room.doors.append(room.doors.pop(0))
+        # np.rot90(self.roomImage)
     
     # used for debugging
     def display(self):
         print(self.doors)
         print(self.num_doors)
 
-oneDPic = cv2.imread('1_door_room.png', 0)
-oneDPicTwo = cv2.imread('1_door_room2.png')
-oneDPicThree = cv2.imread('1_door_room3.png')
-oneDPicFour = cv2.imread('1_door_room4.png')
-oneDPicFive = cv2.imread('1_door_room5.png')
+oneDPic = cv2.imread('./assets/1_door_room.png')
+oneDPicTwo = cv2.imread('./assets/1_door_room2.png')
+oneDPicThree = cv2.imread('./assets/1_door_room3.png')
+oneDPicFour = cv2.imread('./assets/1_door_room4.png')
+oneDPicFive = cv2.imread('./assets/1_door_room5.png')
 
 # straight
-twoDPic = cv2.imread('2_door_hall.png')
-twoDPicFour = cv2.imread('2_door_hall4.png')
-twoDPicSix = cv2.imread('2_door_room2.png')
-twoDPicSeven = cv2.imread('2_door_room3.png')
+twoDPic = cv2.imread('./assets/2_door_hall.png')
+twoDPicFour = cv2.imread('./assets/2_door_hall4.png')
+twoDPicSix = cv2.imread('./assets/2_door_room2.png')
+twoDPicSeven = cv2.imread('./assets/2_door_room3.png')
 
 # angled
-twoDPicTwo = cv2.imread('2_door_hall2.png')
-twoDPicThree = cv2.imread('2_door_hall3.png')
-twoDPicFive = cv2.imread('2_door_room.png')
-twoDPicEight = cv2.imread('2_door_room4.png')
+twoDPicTwo = cv2.imread('./assets/2_door_hall2.png')
+twoDPicThree = cv2.imread('./assets/2_door_hall3.png')
+twoDPicFive = cv2.imread('./assets/2_door_room.png')
+twoDPicEight = cv2.imread('./assets/2_door_room4.png')
 
-threeDPic = cv2.imread('3_door_hall.png')
-threeDPicTwo = cv2.imread('3_door_hall2.png')
-threeDPicThree = cv2.imread('3_door_room.png')
-threeDPicFour = cv2.imread('3_door_room2.png')
-threeDPicFive = cv2.imread('3_door_room3.png')
-threeDPicSix = cv2.imread('3_door_room4.png')
+threeDPic = cv2.imread('./assets/3_door_hall.png')
+threeDPicTwo = cv2.imread('./assets/3_door_hall2.png')
+threeDPicThree = cv2.imread('./assets/3_door_room.png')
+threeDPicFour = cv2.imread('./assets/3_door_room2.png')
+threeDPicFive = cv2.imread('./assets/3_door_room3.png')
+threeDPicSix = cv2.imread('./assets/3_door_room4.png')
 
-fourDPic = cv2.imread('4_door_hall.png')
-fourDPicTwo = cv2.imread('4_door_room.png')
-fourDPicThree = cv2.imread('4_door_room2.png')
-fourDPicFour = cv2.imread('4_door_room3.png')
+fourDPic = cv2.imread('./assets/4_door_hall.png')
+fourDPicTwo = cv2.imread('./assets/4_door_room.png')
+fourDPicThree = cv2.imread('./assets/4_door_room2.png')
+fourDPicFour = cv2.imread('./assets/4_door_room3.png')
 
 oneDoor = Room([1, 0, 0, 0], oneDPic)
 oneDoorTwo = Room([1, 0, 0, 0], oneDPicTwo)
@@ -109,7 +110,6 @@ class Dungeon:
         self.map[4][4] = roomLists[4][random.randint(0,3)]
 
     def build_dungeon(self, x, y):
-        print(self.map)
         # if current room has only one door, we have reached a dead end
         if self.map[x][y].num_doors == 1:
             print('base case')
@@ -145,34 +145,39 @@ class Dungeon:
 
     def get_room(self, doors, num):
         if (num == 1):
-            new_room = roomLists[1][random.randint(0,3)]
+            new_room = roomLists[1][random.randint(0,4)]
+            print(new_room)
             while new_room.doors != doors:
-                new_room.rotate()
+                new_room = new_room.rotate(new_room)
                 print("test")
             return new_room
         
         if (num == 2):
             if(doors[0] == doors[2] or doors[1] == doors[3]):
                 new_room = roomLists[2][random.randint(0,3)]
+                print(new_room.doors)
                 while new_room.doors != doors:
-                    new_room.rotate()
+                    new_room = new_room.rotate(new_room)
                 return new_room
             else:
                 new_room = roomLists[0][random.randint(0,3)]
+                print(new_room.doors)                
                 while new_room.doors != doors:
-                    new_room.rotate()
+                    new_room = new_room.rotate(new_room)
                 return new_room
 
         if (num == 3):
             new_room = roomLists[3][random.randint(0,5)]
+            print(new_room.doors)            
             while new_room.doors != doors:
-                new_room.rotate()
+                new_room = new_room.rotate(new_room)
             return new_room
 
         if (num == 4):
             new_room = roomLists[4][random.randint(0,3)]
+            print(new_room.doors)            
             while new_room.doors != doors:
-                new_room.rotate()
+                new_room = new_room.rotate(new_room)
             return new_room
         
 
