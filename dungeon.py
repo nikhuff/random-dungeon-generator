@@ -16,11 +16,10 @@ class Room:
         self.roomImage = image
 
 
-    def rotate(self, room):
-        print(room.doors)
-        # rotate the doors and image 90 degrees
-        room.doors = room.doors.append(room.doors.pop(0))
-        # np.rot90(self.roomImage)
+    def rotate(self):
+        self.doors = [self.doors[-1]] + self.doors[:-1]
+        self.roomImage = np.rot90(self.roomImage, -1)
+        return self
     
     # used for debugging
     def display(self):
@@ -112,7 +111,7 @@ class Dungeon:
     def build_dungeon(self, x, y):
         # if current room has only one door, we have reached a dead end
         if self.map[x][y].num_doors == 1:
-            print('base case')
+            # print('base case')
             return
         else:
             doors = self.map[x][y].doors
@@ -146,49 +145,38 @@ class Dungeon:
     def get_room(self, doors, num):
         if (num == 1):
             new_room = roomLists[1][random.randint(0,4)]
-            print(new_room)
+            print(new_room.doors)
             while new_room.doors != doors:
                 new_room = new_room.rotate(new_room)
-                print("test")
             return new_room
         
         if (num == 2):
             if(doors[0] == doors[2] or doors[1] == doors[3]):
                 new_room = roomLists[2][random.randint(0,3)]
-                print(new_room.doors)
+                print(new_room.doors)              
                 while new_room.doors != doors:
                     new_room = new_room.rotate(new_room)
                 return new_room
             else:
                 new_room = roomLists[0][random.randint(0,3)]
-                print(new_room.doors)                
+                print(new_room.doors)              
                 while new_room.doors != doors:
                     new_room = new_room.rotate(new_room)
                 return new_room
 
         if (num == 3):
             new_room = roomLists[3][random.randint(0,5)]
-            print(new_room.doors)            
+            print(new_room.doors)              
             while new_room.doors != doors:
                 new_room = new_room.rotate(new_room)
             return new_room
 
         if (num == 4):
             new_room = roomLists[4][random.randint(0,3)]
-            print(new_room.doors)            
+            print(new_room.doors)              
             while new_room.doors != doors:
                 new_room = new_room.rotate(new_room)
             return new_room
-        
-
-
-        if (num == 3):
-            new_room = random.randint(0,5)
-            return (roomLists[3][new_room])
-
-        if (num == 4):
-            new_room = random.randint(0,3)
-            return (roomLists[4][new_room])
 
     def place_room(self, x, y):
         """
@@ -236,7 +224,7 @@ class Dungeon:
 
         
         num_doors = sum(new_doors)
-        print('place room')
+        # print('place room')
         new_room = self.get_room(new_doors, num_doors)
         self.map[x][y] = new_room
 
@@ -249,12 +237,18 @@ class Dungeon:
             horizontal_imgs.append(imgs_comb)
 
         imgs_comb = np.vstack(horizontal_imgs)
-        print(imgs_comb)
+        # print(imgs_comb)
         imgs_comb = Image.fromarray(imgs_comb)
 
         imgs_comb.save('./assets/dungeon.png')
        
 
 if __name__ == '__main__':
-    dungeon = Dungeon()
-    dungeon.map[4][4].display()
+    new_room = Room([1, 0, 0, 0], cv2.imread('./assets/1_door_room.png'))
+    cv2.imshow('image', new_room.roomImage)
+    cv2.waitKey(0)
+    print(new_room.doors)
+    new_room = new_room.rotate()
+    print(new_room.doors)
+    cv2.imshow('image', new_room.roomImage)
+    cv2.waitKey(0)
