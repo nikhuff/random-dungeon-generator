@@ -11,12 +11,12 @@ class Room:
     def __init__(self, doors, image):
         self.doors = doors
         self.num_doors = doors.count(1)
-        self.roomImage = image
+        self.image = image
 
 
     def rotate(self):
         self.doors = [self.doors[-1]] + self.doors[:-1]
-        self.roomImage = np.rot90(self.roomImage, -1)
+        self.image = np.rot90(self.image, -1)
         return self
     
     # used for debugging
@@ -24,35 +24,35 @@ class Room:
         print(self.doors)
         print(self.num_doors)
 
-oneDPic = cv2.imread('./assets/1_door_room.png')
-oneDPicTwo = cv2.imread('./assets/1_door_room2.png')
-oneDPicThree = cv2.imread('./assets/1_door_room3.png')
-oneDPicFour = cv2.imread('./assets/1_door_room4.png')
-oneDPicFive = cv2.imread('./assets/1_door_room5.png')
+oneDPic = cv2.imread('./assets/1_door_room.png', 0)
+oneDPicTwo = cv2.imread('./assets/1_door_room2.png', 0)
+oneDPicThree = cv2.imread('./assets/1_door_room3.png', 0)
+oneDPicFour = cv2.imread('./assets/1_door_room4.png', 0)
+oneDPicFive = cv2.imread('./assets/1_door_room5.png', 0)
 
 # straight
-twoDPic = cv2.imread('./assets/2_door_hall.png')
-twoDPicFour = cv2.imread('./assets/2_door_hall4.png')
-twoDPicSix = cv2.imread('./assets/2_door_room2.png')
-twoDPicSeven = cv2.imread('./assets/2_door_room3.png')
+twoDPic = cv2.imread('./assets/2_door_hall.png', 0)
+twoDPicFour = cv2.imread('./assets/2_door_hall4.png', 0)
+twoDPicSix = cv2.imread('./assets/2_door_room2.png', 0)
+twoDPicSeven = cv2.imread('./assets/2_door_room3.png', 0)
 
 # angled
-twoDPicTwo = cv2.imread('./assets/2_door_hall2.png')
-twoDPicThree = cv2.imread('./assets/2_door_hall3.png')
-twoDPicFive = cv2.imread('./assets/2_door_room.png')
-twoDPicEight = cv2.imread('./assets/2_door_room4.png')
+twoDPicTwo = cv2.imread('./assets/2_door_hall2.png', 0)
+twoDPicThree = cv2.imread('./assets/2_door_hall3.png', 0)
+twoDPicFive = cv2.imread('./assets/2_door_room.png', 0)
+twoDPicEight = cv2.imread('./assets/2_door_room4.png', 0)
 
-threeDPic = cv2.imread('./assets/3_door_hall.png')
-threeDPicTwo = cv2.imread('./assets/3_door_hall2.png')
-threeDPicThree = cv2.imread('./assets/3_door_room.png')
-threeDPicFour = cv2.imread('./assets/3_door_room2.png')
-threeDPicFive = cv2.imread('./assets/3_door_room3.png')
-threeDPicSix = cv2.imread('./assets/3_door_room4.png')
+threeDPic = cv2.imread('./assets/3_door_hall.png', 0)
+threeDPicTwo = cv2.imread('./assets/3_door_hall2.png', 0)
+threeDPicThree = cv2.imread('./assets/3_door_room.png', 0)
+threeDPicFour = cv2.imread('./assets/3_door_room2.png', 0)
+threeDPicFive = cv2.imread('./assets/3_door_room3.png', 0)
+threeDPicSix = cv2.imread('./assets/3_door_room4.png', 0)
 
-fourDPic = cv2.imread('./assets/4_door_hall.png')
-fourDPicTwo = cv2.imread('./assets/4_door_room.png')
-fourDPicThree = cv2.imread('./assets/4_door_room2.png')
-fourDPicFour = cv2.imread('./assets/4_door_room3.png')
+fourDPic = cv2.imread('./assets/4_door_hall.png', 0)
+fourDPicTwo = cv2.imread('./assets/4_door_room.png', 0)
+fourDPicThree = cv2.imread('./assets/4_door_room2.png', 0)
+fourDPicFour = cv2.imread('./assets/4_door_room3.png', 0)
 
 oneDoor = Room([1, 0, 0, 0], oneDPic)
 oneDoorTwo = Room([1, 0, 0, 0], oneDPicTwo)
