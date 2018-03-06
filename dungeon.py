@@ -1,5 +1,7 @@
-
-
+import numpy as np
+import random
+from main import roomLists
+from PIL import Image
 
 class Room:
     """
@@ -8,15 +10,16 @@ class Room:
     a door while 0 denotes no door. Image is a numpy array holding the
     image of the room.
     """
-    def __init__(self, doors):
+    def __init__(self, doors, image):
         self.doors = doors
         self.num_doors = doors.count(1)
-        self.image = np.zeros((100, 100))
+        self.roomImage = image
+
 
     def rotate(self):
         # rotate the doors and image 90 degrees
         self.doors = self.doors[-1] + self.doors[:-1]
-        np.rot90(self.image, -1)
+        np.rot90(self.roomImage, -1)
     
     # used for debugging
     def display(self):
@@ -24,10 +27,9 @@ class Room:
         print(self.num_doors)
 
 
-
-
-
 class Dungeon:
+
+
     """
     Contains the notion of a dungeon. Map is a 9x9 array that holds
     instances of rooms. Build dungeon starts at the center room
@@ -35,7 +37,7 @@ class Dungeon:
     """
     def __init__(self):
         self.map = np.zeros((9, 9), dtype=Room)
-        self.map[4][4] = Room([1] * 4)
+        self.map[4][4] = roomLists[4][random.randint(0,5)]
 
     def build_dungeon(self, x, y):
         # if current room has only one door, we have reached a dead end
@@ -72,25 +74,26 @@ class Dungeon:
 
     def get_room(self, doors, num):
 
+
         if (num == 1):
-            returnRoomNum = random.randint(oneDoorRooms.length())
-            return(oneDoorRooms[returnRoomNum])
+            returnRoomNum = random.randint(0,5)
+            return(roomLists[1][returnRoomNum])
 
         if (num == 2):
             if(doors[0] == doors[2] or doors[1] == doors[3]):
-                returnRoomNum = random.randint(twoDoorRoomsS.length())
-                return (twoDoorRoomsS[returnRoomNum])
+                returnRoomNum = random.randint(0,5)
+                return (roomLists[2][returnRoomNum])
             else:
-                returnRoomNum = random.randint(twoDoorRoomsA.length())
-                return (twoDoorRoomsA[returnRoomNum])
+                returnRoomNum = random.randint(0,5)
+                return (roomLists[0][returnRoomNum])
 
         if (num == 3):
-            returnRoomNum = random.randint(threeDoorRooms.length())
-            return (threeDoorRooms[returnRoomNum])
+            returnRoomNum = random.randint(0,7)
+            return (roomLists[3][returnRoomNum])
 
         if (num == 4):
-            returnRoomNum = random.randint(fourDoorRooms.length())
-            return (fourDoorRooms[returnRoomNum])
+            returnRoomNum = random.randint(0,5)
+            return (roomLists[4][returnRoomNum])
 
     def place_room(self, x, y):
         """
@@ -134,7 +137,7 @@ class Dungeon:
         if y == 0:
             new_doors[3] = 0
         num_doors = sum(new_doors)
-        new_room = self.create_room(new_doors, num_doors)
+        new_room = self.get_room(new_doors, num_doors)
         return new_room
 
     def display_dungeon(self):
