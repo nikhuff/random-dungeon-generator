@@ -106,10 +106,10 @@ class Dungeon:
         new_doors = [0, 0, 0, 0]
         if x > 0:
             if self.map[y][x-1] != 0:
-                if self.map[y][x-1].doors[2] == 1:
+                if self.map[y][x - 1].doors[2] == 1:
                     new_doors[0] = 1
-                else:
-                    new_doors[0] = random.randint(0, 1)
+                elif self.map[y][x - 1].doors[2] == 0:
+                    new_doors[0] = 0
             else:
                 new_doors[0] = random.randint(0, 1)
 
@@ -117,8 +117,8 @@ class Dungeon:
             if self.map[y+1][x] != 0:
                 if self.map[y+1][x].doors[1] == 1:
                     new_doors[3] = 1
-                else:
-                    new_doors[3] = random.randint(0, 1)
+                elif self.map[y + 1][x].doors[1] == 0:
+                    new_doors[3] = 0
             else:
                 new_doors[3] = random.randint(0, 1)
 
@@ -126,8 +126,8 @@ class Dungeon:
             if self.map[y][x + 1] != 0:
                 if self.map[y][x + 1].doors[0] == 1:
                     new_doors[2] = 1
-                else:
-                    new_doors[2] = random.randint(0, 1)
+                elif self.map[y][x + 1].doors[0] == 0:
+                    new_doors[2] = 0
             else:
                 new_doors[2] = random.randint(0, 1)
 
@@ -135,8 +135,8 @@ class Dungeon:
             if self.map[y - 1][x] != 0:
                 if self.map[y - 1][x].doors[3] == 1:
                     new_doors[1] = 1
-                else:
-                    new_doors[1] = random.randint(0, 1)
+                elif self.map[y - 1][x].doors[3] == 0:
+                    new_doors[1] = 0
             else:
                 new_doors[1] = random.randint(0, 1)
 
