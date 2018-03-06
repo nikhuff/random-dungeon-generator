@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from main import roomLists
+import cv2
 from PIL import Image
 
 class Room:
@@ -26,10 +26,79 @@ class Room:
         print(self.doors)
         print(self.num_doors)
 
+oneDPic = cv2.imread('1_door_room.png', 0)
+oneDPicTwo = cv2.imread('1_door_room2.png')
+oneDPicThree = cv2.imread('1_door_room3.png')
+oneDPicFour = cv2.imread('1_door_room4.png')
+oneDPicFive = cv2.imread('1_door_room5.png')
+
+# straight
+twoDPic = cv2.imread('2_door_hall.png')
+twoDPicFour = cv2.imread('2_door_hall4.png')
+twoDPicSix = cv2.imread('2_door_room2.png')
+twoDPicSeven = cv2.imread('2_door_room3.png')
+
+# angled
+twoDPicTwo = cv2.imread('2_door_hall2.png')
+twoDPicThree = cv2.imread('2_door_hall3.png')
+twoDPicFive = cv2.imread('2_door_room.png')
+twoDPicEight = cv2.imread('2_door_room4.png')
+
+threeDPic = cv2.imread('3_door_hall.png')
+threeDPicTwo = cv2.imread('3_door_hall2.png')
+threeDPicThree = cv2.imread('3_door_room.png')
+threeDPicFour = cv2.imread('3_door_room2.png')
+threeDPicFive = cv2.imread('3_door_room3.png')
+threeDPicSix = cv2.imread('3_door_room4.png')
+
+fourDPic = cv2.imread('4_door_hall.png')
+fourDPicTwo = cv2.imread('4_door_room.png')
+fourDPicThree = cv2.imread('4_door_room2.png')
+fourDPicFour = cv2.imread('4_door_room3.png')
+
+oneDoor = Room([1, 0, 0, 0], oneDPic)
+oneDoorTwo = Room([1, 0, 0, 0], oneDPicTwo)
+oneDoorThree = Room([1, 0, 0, 0], oneDPicThree)
+oneDoorFour = Room([1, 0, 0, 0], oneDPicFour)
+oneDoorFive = Room([1, 0, 0, 0], oneDPicFive)
+
+oneDoorRooms = [oneDoor, oneDoorTwo, oneDoorThree, oneDoorFour, oneDoorFive]
+
+# straight
+twoDoor = Room([1, 0, 1, 0], twoDPic)
+twoDoorFour = Room([1, 0, 1, 0], twoDPicFour)
+twoDoorSix = Room([1, 0, 1, 0], twoDPicSix)
+twoDoorSeven = Room([1, 0, 1, 0], twoDPicSeven)
+
+twoDoorRoomsS = [twoDoor, twoDoorFour, twoDoorSix, twoDoorSeven]
+
+# angled
+twoDoorTwo = Room([1, 1, 0, 0], twoDPicTwo)
+twoDoorThree = Room([1, 0, 0, 1], twoDPicThree)
+twoDoorFive = Room([1, 0, 0, 1], twoDPicFive)
+twoDoorEight = Room([1, 0, 0, 1], twoDPicEight)
+
+twoDoorRoomsA = [twoDoorTwo, twoDoorThree, twoDoorFive, twoDoorEight]
+
+threeDoor = Room([1, 0, 1, 1], threeDPic)
+threeDoorTwo = Room([1, 0, 1, 1], threeDPicTwo)
+threeDoorThree = Room([1, 0, 1, 1], threeDPicThree)
+threeDoorFour = Room([1, 0, 1, 1], threeDPicFour)
+threeDoorFive = Room([1, 0, 1, 1], threeDPicFive)
+threeDoorSix = Room([1, 0, 1, 1], threeDPicSix)
+
+threeDoorRooms = [threeDoor, threeDoorTwo, threeDoorThree, threeDoorFour, threeDoorFive, threeDoorSix]
+
+fourDoor = Room([1, 1, 1, 1], fourDPic)
+fourDoorTwo = Room([1, 1, 1, 1], fourDPicTwo)
+fourDoorThree = Room([1, 1, 1, 1], fourDPicThree)
+fourDoorFour = Room([1, 1, 1, 1], fourDPicFour)
+
+fourDoorRooms = [fourDoor, fourDoorTwo, fourDoorThree, fourDoorFour]
+
+roomLists = [twoDoorRoomsA, oneDoorRooms, twoDoorRoomsS, threeDoorRooms, fourDoorRooms]
 
 class Dungeon:
-
-
     """
     Contains the notion of a dungeon. Map is a 9x9 array that holds
     instances of rooms. Build dungeon starts at the center room
@@ -37,7 +106,7 @@ class Dungeon:
     """
     def __init__(self):
         self.map = np.zeros((9, 9), dtype=Room)
-        self.map[4][4] = roomLists[4][random.randint(0,5)]
+        self.map[4][4] = roomLists[4][random.randint(0,4)]
 
     def build_dungeon(self, x, y):
         # if current room has only one door, we have reached a dead end
@@ -46,7 +115,7 @@ class Dungeon:
         else:
             doors = self.map[x][y].doors
             # loop through the doors of the current room
-            for i in range(doors):
+            for i in range(len(doors)):
                 # if there is a door
                 if doors[i]:
                     # if the door is on the left and there is not
@@ -76,23 +145,23 @@ class Dungeon:
 
 
         if (num == 1):
-            returnRoomNum = random.randint(0,5)
+            returnRoomNum = random.randint(0,4)
             return(roomLists[1][returnRoomNum])
 
         if (num == 2):
             if(doors[0] == doors[2] or doors[1] == doors[3]):
-                returnRoomNum = random.randint(0,5)
+                returnRoomNum = random.randint(0,4)
                 return (roomLists[2][returnRoomNum])
             else:
-                returnRoomNum = random.randint(0,5)
+                returnRoomNum = random.randint(0,4)
                 return (roomLists[0][returnRoomNum])
 
         if (num == 3):
-            returnRoomNum = random.randint(0,7)
+            returnRoomNum = random.randint(0,6)
             return (roomLists[3][returnRoomNum])
 
         if (num == 4):
-            returnRoomNum = random.randint(0,5)
+            returnRoomNum = random.randint(0,3)
             return (roomLists[4][returnRoomNum])
 
     def place_room(self, x, y):
@@ -108,25 +177,25 @@ class Dungeon:
             if self.map[x-1, y].doors[2] == 1:
                 new_doors[0] = 1
         else:
-            new_doors[0] = random.randint(0, 2)
+            new_doors[0] = random.randint(0, 1)
 
         if self.map[x, y+1] is not None:
             if self.map[x, y+1].doors[3] == 1:
                 new_doors[1] = 1
         else:
-            new_doors[1] = random.randint(0, 2)
+            new_doors[1] = random.randint(0, 1)
 
         if self.map[x + 1, y] is not None:
             if self.map[x + 1, y].doors[0] == 1:
                 new_doors[2] = 1
         else:
-            new_doors[2] = random.randint(0, 2)
+            new_doors[2] = random.randint(0, 1)
 
         if self.map[x, y - 1] is not None:
             if self.map[x, y - 1].doors[1] == 1:
                 new_doors[3] = 1
         else:
-            new_doors[0] = random.randint(0, 2)
+            new_doors[0] = random.randint(0, 1)
 
         if x == 0:
             new_doors[0] = 0
@@ -149,6 +218,7 @@ class Dungeon:
             horizontal_imgs.append(imgs_comb)
 
         imgs_comb = np.vstack(horizontal_imgs)
+        print(imgs_comb)
         imgs_comb = Image.fromarray(imgs_comb)
 
         imgs_comb.save('./assets/dungeon.png')
