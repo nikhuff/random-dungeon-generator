@@ -22,7 +22,8 @@ class Room:
     # used for debugging
     def display(self):
         print(self.doors)
-        print(self.num_doors)
+        cv2.imshow('room', self.image)
+        cv2.waitKey(5000)
 
 oneDPic = cv2.imread('./assets/1_door_room.png', 0)
 oneDPicTwo = cv2.imread('./assets/1_door_room2.png', 0)
