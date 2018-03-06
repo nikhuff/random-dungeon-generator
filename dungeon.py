@@ -18,8 +18,8 @@ class Room:
 
     def rotate(self):
         # rotate the doors and image 90 degrees
-        self.doors = self.doors[-1] + self.doors[:-1]
-        np.rot90(self.roomImage, -1)
+        self.doors = self.doors.append(self.doors.pop(0))
+        np.rot90(self.roomImage)
     
     # used for debugging
     def display(self):
@@ -106,11 +106,13 @@ class Dungeon:
     """
     def __init__(self):
         self.map = np.zeros((9, 9), dtype=Room)
-        self.map[4][4] = roomLists[4][random.randint(0,4)]
+        self.map[4][4] = roomLists[4][random.randint(0,3)]
 
     def build_dungeon(self, x, y):
+        print(self.map)
         # if current room has only one door, we have reached a dead end
         if self.map[x][y].num_doors == 1:
+            print('base case')
             return
         else:
             doors = self.map[x][y].doors
@@ -120,49 +122,68 @@ class Dungeon:
                 if doors[i]:
                     # if the door is on the left and there is not
                     # already a door on that side
-                    if i == 0 and self.map[x - 1][y] is int:  
+                    if i == 0 and self.map[x - 1][y] == 0:  
                         self.place_room(x - 1, y)
                         self.build_dungeon(x - 1, y)
                     # if the door is on the right and there is not
                     # already a door on that side
-                    elif i == 1 and self.map[x][y + 1] is int:
+                    elif i == 1 and self.map[x][y + 1] == 0:
                         self.place_room(x, y + 1)
                         self.build_dungeon(x, y + 1)
                     # if the door is on the bottom and there is not
                     # already a door on that side
-                    elif i == 2 and self.map[x + 1][y] is int:
+                    elif i == 2 and self.map[x + 1][y] == 0:
                         self.place_room(x + 1, y)
                         self.build_dungeon(x + 1, y)
                     # if the door is on the bottom and there is not
                     # already a door on that side
-                    elif i == 3 and self.map[x][y + 1] is int:
+                    elif i == 3 and self.map[x][y + 1] == 0:
                         self.place_room(x, y + 1)
                         self.build_dungeon(x, y + 1)
             # once you've checked all your doors, return
             return
 
     def get_room(self, doors, num):
-
-
         if (num == 1):
-            returnRoomNum = random.randint(0,4)
-            return(roomLists[1][returnRoomNum])
-
+            new_room = roomLists[1][random.randint(0,3)]
+            while new_room.doors != doors:
+                new_room.rotate()
+                print("test")
+            return new_room
+        
         if (num == 2):
             if(doors[0] == doors[2] or doors[1] == doors[3]):
-                returnRoomNum = random.randint(0,4)
-                return (roomLists[2][returnRoomNum])
+                new_room = roomLists[2][random.randint(0,3)]
+                while new_room.doors != doors:
+                    new_room.rotate()
+                return new_room
             else:
-                returnRoomNum = random.randint(0,4)
-                return (roomLists[0][returnRoomNum])
+                new_room = roomLists[0][random.randint(0,3)]
+                while new_room.doors != doors:
+                    new_room.rotate()
+                return new_room
 
         if (num == 3):
-            returnRoomNum = random.randint(0,6)
-            return (roomLists[3][returnRoomNum])
+            new_room = roomLists[3][random.randint(0,5)]
+            while new_room.doors != doors:
+                new_room.rotate()
+            return new_room
 
         if (num == 4):
-            returnRoomNum = random.randint(0,3)
-            return (roomLists[4][returnRoomNum])
+            new_room = roomLists[4][random.randint(0,3)]
+            while new_room.doors != doors:
+                new_room.rotate()
+            return new_room
+        
+
+
+        if (num == 3):
+            new_room = random.randint(0,5)
+            return (roomLists[3][new_room])
+
+        if (num == 4):
+            new_room = random.randint(0,3)
+            return (roomLists[4][new_room])
 
     def place_room(self, x, y):
         """
@@ -171,43 +192,48 @@ class Dungeon:
         need to match the door of the room if not it randomly picks if
         it has a door.
         """
-
+        # if x == 0:
+        #     new_doors[0] = 0
+        # if y == 9:
+        #     new_doors[1] = 0
+        # if x == 9:
+        #     new_doors[2] = 0
+        # if y == 0:
+        #     new_doors[3] = 0
         new_doors = [0, 0, 0, 0]
-        if self.map[x-1, y] is not None:
-            if self.map[x-1, y].doors[2] == 1:
-                new_doors[0] = 1
-        else:
-            new_doors[0] = random.randint(0, 1)
+        if x > 0:
+            if self.map[x-1][y] != 0:
+                if self.map[x-1][y].doors[2] == 1:
+                    new_doors[0] = 1
+            else:
+                new_doors[0] = random.randint(0, 1)
 
-        if self.map[x, y+1] is not None:
-            if self.map[x, y+1].doors[3] == 1:
-                new_doors[1] = 1
-        else:
-            new_doors[1] = random.randint(0, 1)
+        if y < 8:
+            if self.map[x, y+1] != 0:
+                if self.map[x][y+1].doors[3] == 1:
+                    new_doors[1] = 1
+            else:
+                new_doors[1] = random.randint(0, 1)
 
-        if self.map[x + 1, y] is not None:
-            if self.map[x + 1, y].doors[0] == 1:
-                new_doors[2] = 1
-        else:
-            new_doors[2] = random.randint(0, 1)
+        if x < 8:
+            if self.map[x + 1][y] != 0:
+                if self.map[x + 1][y].doors[0] == 1:
+                    new_doors[2] = 1
+            else:
+                new_doors[2] = random.randint(0, 1)
 
-        if self.map[x, y - 1] is not None:
-            if self.map[x, y - 1].doors[1] == 1:
-                new_doors[3] = 1
-        else:
-            new_doors[0] = random.randint(0, 1)
+        if y > 0:
+            if self.map[x][y - 1] != 0:
+                if self.map[x][y - 1].doors[1] == 1:
+                    new_doors[3] = 1
+            else:
+                new_doors[0] = random.randint(0, 1)
 
-        if x == 0:
-            new_doors[0] = 0
-        if y == 9:
-            new_doors[1] = 0
-        if x == 9:
-            new_doors[2] = 0
-        if y == 0:
-            new_doors[3] = 0
+        
         num_doors = sum(new_doors)
+        print('place room')
         new_room = self.get_room(new_doors, num_doors)
-        return new_room
+        self.map[x][y] = new_room
 
     def display_dungeon(self):
         horizontal_imgs = list()

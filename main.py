@@ -9,4 +9,3 @@ if __name__ == '__main__':
 
     dungeon = Dungeon()
     dungeon.build_dungeon(4,4)
-    dungeon.display_dungeon()
