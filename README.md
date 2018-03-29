@@ -1,2 +1,2 @@
 # random-dungeon-generator
-Video game design random-dungeon generator assignment
+Uses prebuilt rooms and recursion to create a png of a dungeon.
